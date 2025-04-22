@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Card</title>
+    <link rel="icon" type="image/x-icon" href="/images/weather.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="weather-card">
+        <h1 class="text-2xl font-bold mb-4 text-center">Weather Card</h1>
+        <div class="mb-4 relative">
+            <input type="text" id="locationInput" class="input-field" placeholder="Enter city name" onmouseover="showDropdown()" onmouseout="handleMouseOut(event)" onkeypress="if(event.key === 'Enter') fetchWeather()">
+            <div id="cityDropdown" class="dropdown hidden" onmouseover="showDropdown()" onmouseout="handleMouseOut(event)">
+                <div class="dropdown-item" onclick="selectCity('New York')">New York</div>
+                <div class="dropdown-item" onclick="selectCity('London')">London</div>
+                <div class="dropdown-item" onclick="selectCity('Tokyo')">Tokyo</div>
+                <div class="dropdown-item" onclick="selectCity('Paris')">Paris</div>
+                <div class="dropdown-item" onclick="selectCity('Sydney')">Sydney</div>
+            </div>
+        </div>
+        <p id="errorMessage" class="error-message hidden">Please provide a valid city name</p>
+        <div id="weatherInfo" class="hidden fade-in">
+            <div class="flex items-center justify-center mb-4">
+                <img id="weatherIcon" class="weather-icon w-16 h-16" alt="Weather Icon">
+                <div class="ml-4">
+                    <h2 id="cityName" class="text-xl font-semibold"></h2>
+                    <p id="temperature" class="text-3xl font-bold"></p>
+                </div>
+            </div>
+            <p id="condition" class="text-center text-lg mb-4"></p>
+            <div class="weather-details text-sm">
+                <div>
+                    <span>Humidity</span>
+                    <span id="humidity"></span>
+                </div>
+                <div>
+                    <span>Wind Speed</span>
+                    <span id="windSpeed"></span>
+                </div>
+                <div>
+                    <span>Feels Like</span>
+                    <span id="feelsLike"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
