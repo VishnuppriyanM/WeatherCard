@@ -1,4 +1,4 @@
-const API_KEY = '0106f784817d49fc8d461457231407';
+const API_KEY = process.env.WEATHER_API_KEY || '0106f784817d49fc8d461457231407';
 const weatherInfo = document.getElementById('weatherInfo');
 const errorMessage = document.getElementById('errorMessage');
 const locationInput = document.getElementById('locationInput');
@@ -12,11 +12,15 @@ async function fetchWeather() {
     }
 
     try {
-        const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${place}&aqi=no`);
-        if (!response.ok) throw new Error('City not found');
+        const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${place}&aqi=no`);
+        if (!response.ok) {
+            console.error('API response error:', response.status, response.statusText);
+            throw new Error('City not found');
+        }
         const data = await response.json();
+        console.log('API data:', data); // Log data for debugging
 
-       // Update UI
+        // Update UI
         document.getElementById('cityName').textContent = `${data.location.name}, ${data.location.country}`;
         document.getElementById('temperature').textContent = `${Math.round(data.current.temp_c)}°C`;
         document.getElementById('condition').textContent = data.current.condition.text;
@@ -33,6 +37,7 @@ async function fetchWeather() {
         // Update background based on condition and time of day
         updateBackground(data.current.condition.text.toLowerCase(), data.current.is_day);
     } catch (error) {
+        console.error('Fetch error:', error);
         showError();
     }
 }
